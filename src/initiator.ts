@@ -1,9 +1,10 @@
-import { Download, DownloadResult } from "./types"
-var gitclone = require('git-clone')
-import chalk from 'chalk'
 import ora from 'ora'
-var rm = require('rimraf').sync
+import rimraf from 'rimraf'
+import chalk from 'chalk'
+import gitclone from 'git-clone'
+import { Download, DownloadResult } from "./types"
 
+const rm = rimraf.sync
 const spinner = ora('正在下载模板...')
 
 const doDownload = (from:string, targetPath:string):Promise<DownloadResult> => {

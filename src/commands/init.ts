@@ -1,3 +1,4 @@
+import fs from 'fs'
 import { prompt } from 'inquirer'
 import initiator from '../initiator'
 
@@ -9,7 +10,10 @@ async function initTemplate () {
     validate(val:string) {
       let result: string | boolean = true
       if (!val) {
-        result = '项目名称不能为空。'
+        result = '项目名称不能为空!'
+      }
+      if (fs.existsSync(val)) {
+        result = '项目名称已存在！'
       }
       return result
     }
@@ -29,7 +33,8 @@ async function initTemplate () {
 
   prompt(questions).then(async ({ proName, tpl, branch }) => {
     const pwd = process.cwd()
-    initiator({ tpl, branch, proName: `${pwd}/${proName}` })
+    const targetPath = `${pwd}/${proName}`
+    initiator({ tpl, branch, targetPath })
   }).catch((error) => {
     console.error(error)
   })

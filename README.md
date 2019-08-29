@@ -5,7 +5,7 @@
 ## 使用
 
 ```bash
-npm install yx-cli -g
+npm install yx-fe-cli -g
 ```
 
 ## 查看

@@ -1,9 +1,9 @@
 {
   "name": "yx-fe-cli",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "yx 是一个项目模板初始化的工具",
   "bin": {
-    "scion": "bin/yx"
+    "yx": "bin/yx"
   },
   "dependencies": {
     "chalk": "^2.4.2",

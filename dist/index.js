@@ -4,9 +4,12 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 function _interopDefault (ex) { return (ex && (typeof ex === 'object') && 'default' in ex) ? ex['default'] : ex; }
 
+var fs = _interopDefault(require('fs'));
 var inquirer = require('inquirer');
-var os = _interopDefault(require('os'));
 var ora = _interopDefault(require('ora'));
+var rimraf = _interopDefault(require('rimraf'));
+var os = _interopDefault(require('os'));
+var child_process = _interopDefault(require('child_process'));
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -1944,17 +1947,66 @@ module.exports.default = module.exports; // For TypeScript
 });
 var chalk_1 = chalk.supportsColor;
 
-var gitclone = require('git-clone');
-var rm = require('rimraf').sync;
+var spawn = child_process.spawn;
+
+var gitClone = function(repo, targetPath, opts, cb) {
+
+    if (typeof opts === 'function') {
+        cb = opts;
+        opts = null;
+    }
+
+    opts = opts || {};
+
+    var git = opts.git || 'git';
+    var args = ['clone'];
+
+    if (opts.shallow) {
+        args.push('--depth');
+        args.push('1');
+    }
+
+    args.push('--');
+    args.push(repo);
+    args.push(targetPath);
+
+    var process = spawn(git, args);
+    process.on('close', function(status) {
+        if (status == 0) {
+            if (opts.checkout) {
+                _checkout();
+            } else {
+                cb && cb();    
+            }
+        } else {
+            cb && cb(new Error("'git clone' failed with status " + status));
+        }
+    });
+
+    function _checkout() {
+        var args = ['checkout', opts.checkout];
+        var process = spawn(git, args, { cwd: targetPath });
+        process.on('close', function(status) {
+            if (status == 0) {
+                cb && cb();
+            } else {
+                cb && cb(new Error("'git checkout' failed with status " + status));
+            }
+        });
+    }
+
+};
+
+var rm = rimraf.sync;
 var spinner = ora('正在下载模板...');
-var doDownload = function (from, proName) {
+var doDownload = function (from, targetPath) {
     spinner.start();
     return new Promise(function (resolve, reject) {
         var options = {
             checkout: 'master',
             shallow: true
         };
-        gitclone(from, proName, options, function (err) {
+        gitClone(from, targetPath, options, function (err) {
             if (err) {
                 reject({
                     status: 0,
@@ -1962,18 +2014,18 @@ var doDownload = function (from, proName) {
                 });
             }
             else {
-                rm(proName + '/.git');
+                rm(targetPath + '/.git');
             }
             spinner.stop();
             resolve({
                 status: 1,
-                msg: "\u65B0\u9879\u76EE\u5DF2\u7ECF\u521D\u59CB\u5316\u6210\u529F! \u76EE\u5F55\u5728\uFF1A \n" + proName
+                msg: "\u65B0\u9879\u76EE\u5DF2\u7ECF\u521D\u59CB\u5316\u6210\u529F! \u76EE\u5F55\u5728\uFF1A \n" + targetPath
             });
         });
     });
 };
 var initiator = function (_a) {
-    var tpl = _a.tpl, branch = _a.branch, proName = _a.proName;
+    var tpl = _a.tpl, branch = _a.branch, targetPath = _a.targetPath;
     return __awaiter(void 0, void 0, void 0, function () {
         var dlFrom, result, _b, error_1;
         return __generator(this, function (_c) {
@@ -1991,19 +2043,19 @@ var initiator = function (_a) {
                     return [3 /*break*/, 6];
                 case 2:
                     dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold-SSR.git';
-                    return [4 /*yield*/, doDownload(dlFrom, proName)];
+                    return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 3:
                     result = _c.sent();
                     return [3 /*break*/, 8];
                 case 4:
                     dlFrom = 'git@git.iyunxiao.com:FE/vue-multiPage-scaffold.git';
-                    return [4 /*yield*/, doDownload(dlFrom, proName)];
+                    return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 5:
                     result = _c.sent();
                     return [3 /*break*/, 8];
                 case 6:
                     dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold.git';
-                    return [4 /*yield*/, doDownload(dlFrom, proName)];
+                    return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 7:
                     result = _c.sent();
                     return [3 /*break*/, 8];
@@ -2032,7 +2084,10 @@ function initTemplate() {
                     validate: function (val) {
                         var result = true;
                         if (!val) {
-                            result = '项目名称不能为空。';
+                            result = '项目名称不能为空!';
+                        }
+                        if (fs.existsSync(val)) {
+                            result = '项目名称已存在！';
                         }
                         return result;
                     }
@@ -2052,10 +2107,11 @@ function initTemplate() {
             inquirer.prompt(questions).then(function (_a) {
                 var proName = _a.proName, tpl = _a.tpl, branch = _a.branch;
                 return __awaiter(_this, void 0, void 0, function () {
-                    var pwd;
+                    var pwd, targetPath;
                     return __generator(this, function (_b) {
                         pwd = process.cwd();
-                        initiator({ tpl: tpl, branch: branch, proName: pwd + "/" + proName });
+                        targetPath = pwd + "/" + proName;
+                        initiator({ tpl: tpl, branch: branch, targetPath: targetPath });
                         return [2 /*return*/];
                     });
                 });
