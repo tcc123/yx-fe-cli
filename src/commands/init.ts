@@ -22,7 +22,7 @@ async function initTemplate () {
     type: 'list',
     name: 'tpl',
     message: '请选择模板:',
-    choices: ['vue-单页面 CSR 渲染模板', 'vue-单页面 SSR 渲染模板', 'vue-多页面 CSR 渲染模板']
+    choices: ['vue-单页面 CSR 渲染模板', 'vue-单页面 SSR 渲染模板', 'vue-多页面 CSR 渲染模板', '微信小程序 基础模板']
   },
   {
     type: 'input',

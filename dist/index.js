@@ -69,7 +69,7 @@ function createCommonjsModule(fn, module) {
 
 var matchOperatorsRe = /[|\\{}()[\]^$+*?.]/g;
 
-var escapeStringRegexp = function (str) {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_escapeStringRegexp = function (str) {
 	if (typeof str !== 'string') {
 		throw new TypeError('Expected a string');
 	}
@@ -77,7 +77,7 @@ var escapeStringRegexp = function (str) {
 	return str.replace(matchOperatorsRe, '\\$&');
 };
 
-var colorName = {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName = {
 	"aliceblue": [240, 248, 255],
 	"antiquewhite": [250, 235, 215],
 	"aqua": [0, 255, 255],
@@ -237,9 +237,9 @@ var conversions = createCommonjsModule(function (module) {
 //       do not use box values types (i.e. Number(), String(), etc.)
 
 var reverseKeywords = {};
-for (var key in colorName) {
-	if (colorName.hasOwnProperty(key)) {
-		reverseKeywords[colorName[key]] = key;
+for (var key in E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName) {
+	if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName.hasOwnProperty(key)) {
+		reverseKeywords[E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName[key]] = key;
 	}
 }
 
@@ -419,9 +419,9 @@ convert.rgb.keyword = function (rgb) {
 	var currentClosestDistance = Infinity;
 	var currentClosestKeyword;
 
-	for (var keyword in colorName) {
-		if (colorName.hasOwnProperty(keyword)) {
-			var value = colorName[keyword];
+	for (var keyword in E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName) {
+		if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName.hasOwnProperty(keyword)) {
+			var value = E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName[keyword];
 
 			// Compute comparative distance
 			var distance = comparativeDistance(rgb, value);
@@ -438,7 +438,7 @@ convert.rgb.keyword = function (rgb) {
 };
 
 convert.keyword.rgb = function (keyword) {
-	return colorName[keyword];
+	return E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorName[keyword];
 };
 
 convert.rgb.xyz = function (rgb) {
@@ -1283,23 +1283,23 @@ models.forEach(function (fromModel) {
 	});
 });
 
-var colorConvert = convert;
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert = convert;
 
-var ansiStyles = createCommonjsModule(function (module) {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles = createCommonjsModule(function (module) {
 
 
 const wrapAnsi16 = (fn, offset) => function () {
-	const code = fn.apply(colorConvert, arguments);
+	const code = fn.apply(E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert, arguments);
 	return `\u001B[${code + offset}m`;
 };
 
 const wrapAnsi256 = (fn, offset) => function () {
-	const code = fn.apply(colorConvert, arguments);
+	const code = fn.apply(E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert, arguments);
 	return `\u001B[${38 + offset};5;${code}m`;
 };
 
 const wrapAnsi16m = (fn, offset) => function () {
-	const rgb = fn.apply(colorConvert, arguments);
+	const rgb = fn.apply(E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert, arguments);
 	return `\u001B[${38 + offset};2;${rgb[0]};${rgb[1]};${rgb[2]}m`;
 };
 
@@ -1415,12 +1415,12 @@ function assembleStyles() {
 		rgb: wrapAnsi16m(rgb2rgb, 10)
 	};
 
-	for (let key of Object.keys(colorConvert)) {
-		if (typeof colorConvert[key] !== 'object') {
+	for (let key of Object.keys(E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert)) {
+		if (typeof E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert[key] !== 'object') {
 			continue;
 		}
 
-		const suite = colorConvert[key];
+		const suite = E__WorkSpace_iyunxiao_yxFeCli_node_modules_colorConvert[key];
 
 		if (key === 'ansi16') {
 			key = 'ansi';
@@ -1452,7 +1452,7 @@ Object.defineProperty(module, 'exports', {
 });
 });
 
-var hasFlag = (flag, argv) => {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag = (flag, argv) => {
 	argv = argv || process.argv;
 	const prefix = flag.startsWith('-') ? '' : (flag.length === 1 ? '-' : '--');
 	const pos = argv.indexOf(prefix + flag);
@@ -1463,14 +1463,14 @@ var hasFlag = (flag, argv) => {
 const env = process.env;
 
 let forceColor;
-if (hasFlag('no-color') ||
-	hasFlag('no-colors') ||
-	hasFlag('color=false')) {
+if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('no-color') ||
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('no-colors') ||
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=false')) {
 	forceColor = false;
-} else if (hasFlag('color') ||
-	hasFlag('colors') ||
-	hasFlag('color=true') ||
-	hasFlag('color=always')) {
+} else if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color') ||
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('colors') ||
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=true') ||
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=always')) {
 	forceColor = true;
 }
 if ('FORCE_COLOR' in env) {
@@ -1495,13 +1495,13 @@ function supportsColor(stream) {
 		return 0;
 	}
 
-	if (hasFlag('color=16m') ||
-		hasFlag('color=full') ||
-		hasFlag('color=truecolor')) {
+	if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=16m') ||
+		E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=full') ||
+		E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=truecolor')) {
 		return 3;
 	}
 
-	if (hasFlag('color=256')) {
+	if (E__WorkSpace_iyunxiao_yxFeCli_node_modules_hasFlag('color=256')) {
 		return 2;
 	}
 
@@ -1582,7 +1582,7 @@ function getSupportLevel(stream) {
 	return translateLevel(level);
 }
 
-var supportsColor_1 = {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_supportsColor = {
 	supportsColor: getSupportLevel,
 	stdout: getSupportLevel(process.stdout),
 	stderr: getSupportLevel(process.stderr)
@@ -1716,10 +1716,10 @@ var templates = (chalk, tmp) => {
 	return chunks.join('');
 };
 
-var chalk = createCommonjsModule(function (module) {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_chalk = createCommonjsModule(function (module) {
 
 
-const stdoutColor = supportsColor_1.stdout;
+const stdoutColor = E__WorkSpace_iyunxiao_yxFeCli_node_modules_supportsColor.stdout;
 
 
 
@@ -1767,15 +1767,15 @@ function Chalk(options) {
 
 // Use bright blue on Windows as the normal blue color is illegible
 if (isSimpleWindowsTerm) {
-	ansiStyles.blue.open = '\u001B[94m';
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.blue.open = '\u001B[94m';
 }
 
-for (const key of Object.keys(ansiStyles)) {
-	ansiStyles[key].closeRe = new RegExp(escapeStringRegexp(ansiStyles[key].close), 'g');
+for (const key of Object.keys(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles)) {
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles[key].closeRe = new RegExp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_escapeStringRegexp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles[key].close), 'g');
 
 	styles[key] = {
 		get() {
-			const codes = ansiStyles[key];
+			const codes = E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles[key];
 			return build.call(this, this._styles ? this._styles.concat(codes) : [codes], this._empty, key);
 		}
 	};
@@ -1787,8 +1787,8 @@ styles.visible = {
 	}
 };
 
-ansiStyles.color.closeRe = new RegExp(escapeStringRegexp(ansiStyles.color.close), 'g');
-for (const model of Object.keys(ansiStyles.color.ansi)) {
+E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color.closeRe = new RegExp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_escapeStringRegexp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color.close), 'g');
+for (const model of Object.keys(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color.ansi)) {
 	if (skipModels.has(model)) {
 		continue;
 	}
@@ -1797,11 +1797,11 @@ for (const model of Object.keys(ansiStyles.color.ansi)) {
 		get() {
 			const level = this.level;
 			return function () {
-				const open = ansiStyles.color[levelMapping[level]][model].apply(null, arguments);
+				const open = E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color[levelMapping[level]][model].apply(null, arguments);
 				const codes = {
 					open,
-					close: ansiStyles.color.close,
-					closeRe: ansiStyles.color.closeRe
+					close: E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color.close,
+					closeRe: E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.color.closeRe
 				};
 				return build.call(this, this._styles ? this._styles.concat(codes) : [codes], this._empty, model);
 			};
@@ -1809,8 +1809,8 @@ for (const model of Object.keys(ansiStyles.color.ansi)) {
 	};
 }
 
-ansiStyles.bgColor.closeRe = new RegExp(escapeStringRegexp(ansiStyles.bgColor.close), 'g');
-for (const model of Object.keys(ansiStyles.bgColor.ansi)) {
+E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor.closeRe = new RegExp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_escapeStringRegexp(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor.close), 'g');
+for (const model of Object.keys(E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor.ansi)) {
 	if (skipModels.has(model)) {
 		continue;
 	}
@@ -1820,11 +1820,11 @@ for (const model of Object.keys(ansiStyles.bgColor.ansi)) {
 		get() {
 			const level = this.level;
 			return function () {
-				const open = ansiStyles.bgColor[levelMapping[level]][model].apply(null, arguments);
+				const open = E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor[levelMapping[level]][model].apply(null, arguments);
 				const codes = {
 					open,
-					close: ansiStyles.bgColor.close,
-					closeRe: ansiStyles.bgColor.closeRe
+					close: E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor.close,
+					closeRe: E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.bgColor.closeRe
 				};
 				return build.call(this, this._styles ? this._styles.concat(codes) : [codes], this._empty, model);
 			};
@@ -1898,9 +1898,9 @@ function applyStyle() {
 	// Turns out that on Windows dimmed gray text becomes invisible in cmd.exe,
 	// see https://github.com/chalk/chalk/issues/58
 	// If we're on Windows and we're dealing with a gray color, temporarily make 'dim' a noop.
-	const originalDim = ansiStyles.dim.open;
+	const originalDim = E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.dim.open;
 	if (isSimpleWindowsTerm && this.hasGrey) {
-		ansiStyles.dim.open = '';
+		E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.dim.open = '';
 	}
 
 	for (const code of this._styles.slice().reverse()) {
@@ -1916,7 +1916,7 @@ function applyStyle() {
 	}
 
 	// Reset the original `dim` if we changed it to work around the Windows dimmed gray issue
-	ansiStyles.dim.open = originalDim;
+	E__WorkSpace_iyunxiao_yxFeCli_node_modules_ansiStyles.dim.open = originalDim;
 
 	return str;
 }
@@ -1945,11 +1945,11 @@ module.exports = Chalk(); // eslint-disable-line new-cap
 module.exports.supportsColor = stdoutColor;
 module.exports.default = module.exports; // For TypeScript
 });
-var chalk_1 = chalk.supportsColor;
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_chalk_1 = E__WorkSpace_iyunxiao_yxFeCli_node_modules_chalk.supportsColor;
 
 var spawn = child_process.spawn;
 
-var gitClone = function(repo, targetPath, opts, cb) {
+var E__WorkSpace_iyunxiao_yxFeCli_node_modules_gitClone = function(repo, targetPath, opts, cb) {
 
     if (typeof opts === 'function') {
         cb = opts;
@@ -2006,7 +2006,7 @@ var doDownload = function (from, targetPath) {
             checkout: 'master',
             shallow: true
         };
-        gitClone(from, targetPath, options, function (err) {
+        E__WorkSpace_iyunxiao_yxFeCli_node_modules_gitClone(from, targetPath, options, function (err) {
             if (err) {
                 reject({
                     status: 0,
@@ -2034,38 +2034,45 @@ var initiator = function (_a) {
                     dlFrom = '';
                     _c.label = 1;
                 case 1:
-                    _c.trys.push([1, 9, , 10]);
+                    _c.trys.push([1, 11, , 12]);
                     _b = tpl;
                     switch (_b) {
                         case 'vue-单页面 SSR 渲染模板': return [3 /*break*/, 2];
                         case 'vue-多页面 CSR 渲染模板': return [3 /*break*/, 4];
+                        case '微信小程序 基础模板': return [3 /*break*/, 6];
                     }
-                    return [3 /*break*/, 6];
+                    return [3 /*break*/, 8];
                 case 2:
                     dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold-SSR.git';
                     return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 3:
                     result = _c.sent();
-                    return [3 /*break*/, 8];
+                    return [3 /*break*/, 10];
                 case 4:
                     dlFrom = 'git@git.iyunxiao.com:FE/vue-multiPage-scaffold.git';
                     return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 5:
                     result = _c.sent();
-                    return [3 /*break*/, 8];
+                    return [3 /*break*/, 10];
                 case 6:
-                    dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold.git';
+                    dlFrom = 'git@git.iyunxiao.com:shulianwang/miniprogram_scaffold.git';
                     return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 7:
                     result = _c.sent();
-                    return [3 /*break*/, 8];
-                case 8: return [3 /*break*/, 10];
+                    return [3 /*break*/, 10];
+                case 8:
+                    dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold.git';
+                    return [4 /*yield*/, doDownload(dlFrom, targetPath)];
                 case 9:
+                    result = _c.sent();
+                    return [3 /*break*/, 10];
+                case 10: return [3 /*break*/, 12];
+                case 11:
                     error_1 = _c.sent();
                     console.error(error_1);
-                    return [3 /*break*/, 10];
-                case 10:
-                    console.log(result.status ? chalk.green(result.msg) : chalk.red(result.msg));
+                    return [3 /*break*/, 12];
+                case 12:
+                    console.log(result.status ? E__WorkSpace_iyunxiao_yxFeCli_node_modules_chalk.green(result.msg) : E__WorkSpace_iyunxiao_yxFeCli_node_modules_chalk.red(result.msg));
                     return [2 /*return*/];
             }
         });
@@ -2096,7 +2103,7 @@ function initTemplate() {
                     type: 'list',
                     name: 'tpl',
                     message: '请选择模板:',
-                    choices: ['vue-单页面 CSR 渲染模板', 'vue-单页面 SSR 渲染模板', 'vue-多页面 CSR 渲染模板']
+                    choices: ['vue-单页面 CSR 渲染模板', 'vue-单页面 SSR 渲染模板', 'vue-多页面 CSR 渲染模板', '微信小程序 基础模板']
                 },
                 {
                     type: 'input',

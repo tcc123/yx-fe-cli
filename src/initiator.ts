@@ -46,6 +46,10 @@ const initiator = async ({ tpl, branch, targetPath }: Download) => {
         dlFrom = 'git@git.iyunxiao.com:FE/vue-multiPage-scaffold.git'
         result = await doDownload(dlFrom, targetPath)
         break;
+      case '微信小程序 基础模板':
+        dlFrom = 'git@git.iyunxiao.com:shulianwang/miniprogram_scaffold.git'
+        result = await doDownload(dlFrom, targetPath)
+        break;
       default:
         dlFrom = 'git@git.iyunxiao.com:FE/vue-singlePage-scaffold.git'
         result = await doDownload(dlFrom, targetPath)
@@ -55,7 +59,7 @@ const initiator = async ({ tpl, branch, targetPath }: Download) => {
     console.error(error)
   }
 
-  
+
   console.log(result.status ? chalk.green(result.msg) : chalk.red(result.msg))
 }
 
